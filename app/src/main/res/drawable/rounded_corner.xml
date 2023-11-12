@@ -1,0 +1,5 @@
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    <solid android:color="#00000000"/> <!-- Couleur de fond transparente -->
+    <corners android:radius="30dp"/> <!-- Rayon des coins -->
+    <stroke android:color="#3F51B5" android:width="2dp"/> <!-- Couleur et largeur de la bordure -->
+</shape>

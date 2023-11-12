@@ -1,0 +1,231 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#3F51B5"
+    tools:context=".ChoiceOperators"
+    android:orientation="horizontal">
+
+
+
+        <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="720dp"
+        android:layout_margin="0dp"
+        app:cardBackgroundColor="#D7D6D8"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="100dp">
+
+        <ImageView
+            android:id="@+id/ImageView0101"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="2dp"
+            android:padding="14dp"
+            android:src="@drawable/baseline_arrow_back2_24" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="19dp"
+            android:layout_gravity="center_horizontal"
+            android:textStyle="bold"
+            android:textColor="@color/purple_700"
+            android:textSize="20sp"
+            android:text="Transferer rapidement" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="5dp"
+            android:layout_marginTop="70dp"
+            android:textColor="@color/black"
+            android:textSize="11sp"
+            android:textStyle="bold"
+            android:text="VOUS ENVOYEZ PAR" />
+
+
+                <Spinner
+                    android:id="@+id/send_Spinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="95dp"
+                    android:minHeight="48dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+
+                <EditText
+                    android:id="@+id/Sender_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="145dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#EAECF1"
+                    android:drawablePadding="8dp"
+                    android:hint="Numéro de l'expéditeur"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="215dp"
+                    android:textColor="@color/black"
+                    android:textSize="11sp"
+                    android:textStyle="bold"
+                    android:text="VOUS RECEVEZ PAR" />
+
+                <Spinner
+                    android:id="@+id/receiveSpinner"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="239dp"
+                    android:minHeight="48dp"
+                    tools:ignore="SpeakableTextPresentCheck" />
+
+
+                <EditText
+                    android:id="@+id/Recever_number2"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:layout_marginTop="289dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#EAECF1"
+                    android:drawablePadding="8dp"
+                    android:hint="Numéro du destinateur"
+                    android:inputType="number"
+                    android:padding="8dp"
+                    android:textColor="@color/black" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="357dp"
+                    android:background="#D7D6D8"
+                    android:drawablePadding="8dp"
+                    android:textColor="@color/black"
+                    android:textSize="10sp"
+                    android:textStyle="normal"
+                    android:text="Veuillez entrer un montant multiple de 100, afin d'éviter les pertes résiduelles."/>
+
+                <EditText
+                    android:id="@+id/amountToSendEditText"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:layout_marginTop="385dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#EAECF1"
+                    android:drawablePadding="8dp"
+                    android:hint="Montant à envoyer"
+                    android:inputType="number"
+                    android:textColor="@color/black"
+                    android:padding="8dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="460dp"
+                    android:textColor="#000000"
+                    android:textSize="11sp"
+                    android:textStyle="normal"
+                    android:text="Des frais seront prélevés sur le montant de votre transfert."/>
+
+
+                <TextView
+                    android:id="@+id/feesTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="485dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#D7D6D8"
+                    android:drawablePadding="8dp"
+                    android:text="Frais :"
+                    android:textColor="@color/black"
+                    android:padding="8dp" />
+
+
+                <TextView
+                    android:id="@+id/recipientReceiveTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="520dp"
+                    android:layout_marginStart="5dp"
+                    android:background="#D7D6D8"
+                    android:drawablePadding="8dp"
+                    android:text="Le destinateur recevra :"
+                    android:textColor="@color/black"
+                    android:padding="8dp" />
+
+
+
+                <Button
+                    android:id="@+id/Add_recipient"
+                    android:layout_width="230dp"
+                    android:layout_height="58dp"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginTop="565dp"
+                    android:text="ENVOYER"
+                    android:textSize="18sp"
+                    app:cornerRadius="20dp" />
+
+
+        </androidx.cardview.widget.CardView>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_orange"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/orange"
+            android:contentDescription="Logo Orange" />
+
+        <TextView
+            android:id="@+id/text_orange"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Orange" />
+
+        <ImageView
+            android:id="@+id/image_mtn"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/mtn"
+            android:contentDescription="Logo MTN" />
+
+        <TextView
+            android:id="@+id/text_mtn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="MTN" />
+
+        <ImageView
+            android:id="@+id/image_moov"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:src="@drawable/moov"
+            android:contentDescription="Logo Moov" />
+
+        <TextView
+            android:id="@+id/text_moov"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Moov"
+            android:textAppearance="?attr/textAppearanceSubtitle1" />
+
+
+        </RelativeLayout>
+</LinearLayout>
+

@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:padding="16dp"
+    android:background="#3F51B5"
+        tools:context=".Faq">
+
+    <ImageView
+        android:id="@+id/ImageView0165"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_marginTop="-15dp"
+        android:layout_marginStart="-17dp"
+        android:padding="14dp"
+        android:src="@drawable/back_btn"
+        tools:ignore="MissingConstraints" />
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-23dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/white"
+        android:textSize="20sp"
+        android:text="Foire Aux Questions (FAQ)"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"/>
+
+
+        <TextView
+            android:id="@+id/question1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="30dp"
+            android:text="Qu'est-ce que notre application?"
+            android:textSize="18sp"
+            android:textColor="@color/white"
+            android:paddingTop="16dp"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/answer1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="L'application vise à faciliter les transferts d'argent entre différents opérateurs de monnaie électronique, avec une vision future d'interconnecter divers systèmes de paiement existants au sein de cette application. Notre démarche découle de la nécessité de combler un manque dans les solutions actuelles, en offrant aux utilisateurs une option plus adaptée pour des transactions rapides et fluides."
+            android:textSize="16sp"
+            android:textColor="#00E2FF"
+            android:paddingBottom="16dp"/>
+
+
+        <TextView
+            android:id="@+id/question2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Comment puis-je utiliser cette application?"
+            android:textSize="18sp"
+            android:paddingTop="16dp"
+            android:textColor="@color/white"
+            android:paddingBottom="8dp"/>
+
+        <TextView
+            android:id="@+id/answer2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="L'utilisation est extrêmement conviviale. Il vous suffit de créer un compte et de vous connecter. Une fois connecté, vous avez la possibilité de mettre à jour les informations de votre profil, effectuer des transferts d'argent entre les différents opérateurs disponibles dans l'application, tels qu'Orange, MTN ou Moov. De plus, en cas d'oubli, vous pouvez facilement réinitialiser votre mot de passe."
+            android:textSize="16sp"
+            android:textColor="#00E2FF"
+            android:paddingBottom="16dp"/>
+
+
+    </LinearLayout>

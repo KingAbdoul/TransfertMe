@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "859217278480",
+    "firebase_url": "https://transfertme-f6861-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "transfertme-f6861",
+    "storage_bucket": "transfertme-f6861.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:859217278480:android:d07272653aff6646da7c95",
+        "android_client_info": {
+          "package_name": "com.example.transfertme"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "859217278480-9bvsaghs437enmkorl144dhojtaacnq8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcP5lz0nz_-grQW-ZxxghHNXtutX_kwEQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "859217278480-9bvsaghs437enmkorl144dhojtaacnq8.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
