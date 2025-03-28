@@ -11,11 +11,13 @@
     <color name="blue">#2487D6</color>
     <color name="green">#26bea4</color>
     <color name="purple">#0a134c</color>
-    <color name="primary">#FF3700B3</color>
+    <color name="primary">#004AAD</color>
 
 
     <color name="night_mode">#6124B1</color>
     <color name="Notifications">#13B2C3</color>
     <color name="Private_account">#E6a326</color>
     <color name="security">#D95F69</color>
+
+
 </resources>

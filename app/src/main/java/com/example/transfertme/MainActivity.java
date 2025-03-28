@@ -1,31 +1,38 @@
 package com.example.transfertme;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
-import android.view.View;
+import android.text.TextUtils;
 import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.auth.AuthResult;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
+import com.google.firebase.auth.FirebaseAuthInvalidUserException;
+import com.google.firebase.auth.FirebaseUser;
 
 public class MainActivity extends AppCompatActivity {
 
-    private EditText loginEmail, loginPassword;
+    private TextInputEditText loginEmail, loginPassword;
     private CheckBox rememberMe;
     private Button loginButton;
-    private TextView signupRedirectText;
-    private TextView emailEditText;
-    private SharedPreferences sharedPreferences;
+    private TextView signupRedirectText, forgotPasswordText;
+    private ProgressDialog progressDialog;
+
+    private static final String PREFS_NAME = "loginPrefs";
+    private static final String KEY_EMAIL = "email";
+    private static final String KEY_PASSWORD = "password";
+    private static final String KEY_REMEMBER = "rememberChecked";
+
     private FirebaseAuth mAuth;
 
     @Override
@@ -33,90 +40,84 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        FirebaseApp.initializeApp(this);
+        mAuth = FirebaseAuth.getInstance();
+
         loginEmail = findViewById(R.id.loginEmail);
         loginPassword = findViewById(R.id.loginPassword);
         rememberMe = findViewById(R.id.remember_me);
         loginButton = findViewById(R.id.loginButton);
         signupRedirectText = findViewById(R.id.signupRedirectText);
-        emailEditText = findViewById(R.id.forgotRedirectText);
+        forgotPasswordText = findViewById(R.id.forgotPasswordText);
 
-        mAuth = FirebaseAuth.getInstance();
+        // Initialisation du ProgressDialog
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Connexion en cours...");
+        progressDialog.setCancelable(false);
 
-        sharedPreferences = getSharedPreferences("loginPrefs", MODE_PRIVATE);
-        boolean rememberChecked = sharedPreferences.getBoolean("rememberChecked", false);
-        rememberMe.setChecked(rememberChecked);
-        if (rememberChecked) {
-            String savedEmail = sharedPreferences.getString("email", "");
-            String savedPassword = sharedPreferences.getString("password", "");
-            loginEmail.setText(savedEmail);
-            loginPassword.setText(savedPassword);
+        SharedPreferences prefs = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
+        boolean isRememberChecked = prefs.getBoolean(KEY_REMEMBER, false);
+        rememberMe.setChecked(isRememberChecked);
+
+        if (isRememberChecked) {
+            loginEmail.setText(prefs.getString(KEY_EMAIL, ""));
+            loginPassword.setText(prefs.getString(KEY_PASSWORD, ""));
         }
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                final String email = loginEmail.getText().toString();
-                final String password = loginPassword.getText().toString();
-                final boolean remember = rememberMe.isChecked();
+        loginButton.setOnClickListener(v -> {
+            String email = loginEmail.getText().toString().trim();
+            String password = loginPassword.getText().toString().trim();
 
-                if (email.isEmpty() || password.isEmpty()) {
-                    Toast.makeText(MainActivity.this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+            if (TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+                Toast.makeText(MainActivity.this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+                return;
+            }
 
-                // Utiliser Firebase Authentication pour l'authentification de l'utilisateur
-                mAuth.signInWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(MainActivity.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // Authentification réussie
-                                    if (remember) {
-                                        // Enregistrer les informations d'identification dans les préférences partagées
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.putString("email", email);
-                                        editor.putString("password", password);
-                                        editor.putBoolean("rememberChecked", true);
-                                        editor.apply();
-                                    } else {
-                                        // Supprimer les informations d'identification des préférences partagées
-                                        SharedPreferences.Editor editor = sharedPreferences.edit();
-                                        editor.remove("email");
-                                        editor.remove("password");
-                                        editor.remove("rememberChecked");
-                                        editor.apply();
-                                    }
-                                    // Démarrer l'activité suivante après une connexion réussie
-                                    Intent intent = new Intent(MainActivity.this, HomePage.class);
-                                    startActivity(intent);
-                                    finish(); // Fermer l'activité en cours pour éviter de revenir en arrière
+            // Affichage de l'effet de chargement
+            progressDialog.show();
+
+            mAuth.signInWithEmailAndPassword(email, password)
+                    .addOnCompleteListener(MainActivity.this, task -> {
+                        progressDialog.dismiss(); // Masquer le chargement
+
+                        if (task.isSuccessful()) {
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            if (user != null) {
+                                if (rememberMe.isChecked()) {
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    editor.putString(KEY_EMAIL, email);
+                                    editor.putString(KEY_PASSWORD, password);
+                                    editor.putBoolean(KEY_REMEMBER, true);
+                                    editor.apply();
                                 } else {
-                                    // Échec de l'authentification
-                                    Toast.makeText(MainActivity.this, "Authentification invalide", Toast.LENGTH_SHORT).show();
+                                    SharedPreferences.Editor editor = prefs.edit();
+                                    editor.clear();
+                                    editor.apply();
                                 }
+
+                                startActivity(new Intent(MainActivity.this, HomePage.class));
+                                finish();
                             }
-                        });
-            }
+                        } else {
+                            if (task.getException() instanceof FirebaseAuthInvalidUserException) {
+                                Toast.makeText(MainActivity.this, "Cet utilisateur n'existe pas. Inscrivez-vous.", Toast.LENGTH_SHORT).show();
+                            } else if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
+                                Toast.makeText(MainActivity.this, "Mot de passe incorrect. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Toast.makeText(MainActivity.this, "Échec de la connexion. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    });
         });
 
-        signupRedirectText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Ouvrir la page d'inscription
-                Intent intent = new Intent(MainActivity.this, RegisterPage.class);
-                startActivity(intent);
-            }
+        forgotPasswordText.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, Forgot_Password.class));
+            finish();
         });
 
-        emailEditText.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                // Ouvrir la page d'inscription
-                Intent intent = new Intent(MainActivity.this, Forgot_Password.class);
-                startActivity(intent);
-            }
+        signupRedirectText.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, RegisterPage.class));
+            finish();
         });
-            }
-
     }
-
+}

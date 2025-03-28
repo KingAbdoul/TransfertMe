@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="rectangle">
+
+    <!-- Couleur de fond du bouton -->
+    <solid android:color="#004AAD" />
+
+    <!-- Coins arrondis : pour un effet « pilule » -->
+    <corners android:radius="50dp" />
+
+    <!-- Trait de contour (facultatif) -->
+    <stroke
+        android:width="1dp"
+        android:color="#004AAD" />
+
+    <!-- Marges internes (facultatif) -->
+    <padding
+        android:left="16dp"
+        android:top="10dp"
+        android:right="16dp"
+        android:bottom="10dp" />
+</shape>

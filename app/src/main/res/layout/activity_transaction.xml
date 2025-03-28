@@ -1,0 +1,369 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@drawable/bac_rec_ent"
+    android:padding="16dp"
+    tools:context=".TransactionActivity">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="60dp"
+        android:gravity="center_vertical"
+        android:padding="8dp">
+
+
+        <ImageView
+            android:id="@+id/closeIcon"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/icon_exit" />
+
+>
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
+
+        <TextView
+            android:id="@+id/titleText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Effectuer une transaction"
+            android:textSize="15sp"
+            android:fontFamily="@font/avenir"
+            android:textColor="@color/white" />
+
+
+        <View
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+    </LinearLayout>
+
+
+    <TextView
+        android:id="@+id/sendByLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VOUS ENVOYEZ PAR"
+        android:textSize="13sp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp" />
+
+
+    <LinearLayout
+        android:id="@+id/sendOperatorsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+
+        <LinearLayout
+            android:id="@+id/sendOrangeLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:src="@drawable/orange1"
+               />
+
+            <TextView
+                android:id="@+id/sendOrangeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ORANGE"
+                android:textSize="13sp"
+                android:fontFamily="@font/avenir"
+                android:textColor="@color/white"
+                android:layout_marginStart="8dp" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:id="@+id/sendOrangeRadio"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_arrow_drop_down_circle"
+               />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/sendMtnLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:src="@drawable/mtn1"
+               />
+
+            <TextView
+                android:id="@+id/sendMtnText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MTN"
+                android:textSize="13sp"
+                android:fontFamily="@font/avenir"
+                android:textColor="@color/white"
+                android:layout_marginStart="8dp" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:id="@+id/sendMtnRadio"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_arrow_drop_down_circle"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/senderNumberEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="numéro expéditeur"
+        android:textColorHint="#C4CCD1"
+        android:inputType="phone"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_rec_gr"
+        android:padding="10dp"
+        android:drawablePadding="8dp" />
+
+
+    <TextView
+        android:id="@+id/receiveByLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="VOUS RECEVEZ PAR "
+        android:textSize="13sp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/white"
+        android:layout_marginTop="24dp" />
+
+
+    <LinearLayout
+        android:id="@+id/receiveOperatorsContainer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginTop="8dp">
+
+
+        <LinearLayout
+            android:id="@+id/receiveOrangeLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:src="@drawable/orange1"
+               />
+
+            <TextView
+                android:id="@+id/receiveOrangeText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ORANGE"
+                android:textSize="13sp"
+                android:textColor="@color/white"
+                android:fontFamily="@font/avenir"
+                android:layout_marginStart="8dp" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:id="@+id/receiveOrangeRadio"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_arrow_drop_down_circle"
+                 />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/receiveMtnLine"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:padding="8dp"
+            android:gravity="center_vertical"
+            android:clickable="true"
+            android:focusable="true"
+            android:background="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="19dp"
+                android:layout_height="19dp"
+                android:src="@drawable/mtn1"
+                 />
+
+            <TextView
+                android:id="@+id/receiveMtnText"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="MTN"
+                android:textSize="13sp"
+                android:fontFamily="@font/avenir"
+                android:textColor="@color/white"
+                android:layout_marginStart="8dp" />
+
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+
+
+            <ImageView
+                android:id="@+id/receiveMtnRadio"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:src="@drawable/ic_arrow_drop_down_circle"
+                />
+        </LinearLayout>
+    </LinearLayout>
+
+
+    <EditText
+        android:id="@+id/receiverNumberEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="numéro destinataire"
+        android:textColorHint="#C4CCD1"
+        android:inputType="phone"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_rec_gr"
+        android:padding="10dp"
+        android:drawablePadding="8dp" />
+
+
+    <TextView
+        android:id="@+id/multipleHint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="multiples de 100"
+        android:textSize="12sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="16dp" />
+
+>
+    <EditText
+        android:id="@+id/amountEdit"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Montant à envoyer"
+        android:textColorHint="#C4CCD1"
+        android:inputType="number"
+        android:textSize="14sp"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp"
+        android:background="@drawable/ic_rec_gr"
+        android:padding="10dp"
+        android:drawablePadding="8dp" />
+
+
+    <TextView
+        android:id="@+id/feesMessage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="12sp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/white"
+        android:layout_marginTop="8dp" />
+
+
+    <TextView
+        android:id="@+id/feesLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Frais: 2%"
+        android:textSize="13sp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/white"
+        android:layout_marginTop="4dp" />
+
+
+    <TextView
+        android:id="@+id/receiverGetsLabel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Le destinataire recevra"
+        android:textSize="12sp"
+        android:fontFamily="@font/avenir"
+        android:textColor="@color/white"
+        android:layout_marginTop="4dp" />
+
+
+    <Button
+        android:id="@+id/sendButton"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/rounded_button"
+        android:fontFamily="@font/avenir"
+        android:gravity="center"
+        android:text="Envoyer"
+        android:textColor="#FFFFFF"
+        android:textSize="15sp"
+        app:backgroundTint="@null"
+        app:backgroundTintMode="src_over"
+        app:rippleColor="@null"
+        tools:ignore="TouchTargetSizeCheck" />
+
+</LinearLayout>

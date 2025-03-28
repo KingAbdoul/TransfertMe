@@ -1,169 +1,202 @@
 package com.example.transfertme;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.auth.AuthResult;
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.database.DatabaseReference;
-import com.google.firebase.database.FirebaseDatabase;
+import android.widget.TextView;
 
-import java.util.Calendar;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthUserCollisionException;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.firestore.CollectionReference;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 public class RegisterPage extends AppCompatActivity {
 
-    // Les variables pour les EditText, TextView et Button
-    EditText signupName, signupEmail, signupUsername, signupPassword;
-    TextView loginRedirectText;
-    Button signupButton;
-    EditText signupBirth;
 
-    // Les variables Firebase
-    FirebaseDatabase database;
-    DatabaseReference reference;
-    FirebaseAuth mAuth;
+    private TextInputEditText signupName, signupEmail, signupPassword, signupPhone;
+    private Button signupButton;
+    private TextView signinRedirectText;
+
+
+    private FirebaseAuth mAuth;
+    private FirebaseFirestore db;
+    private CollectionReference userRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register_page);
 
-        // Initialise Firebase
+        //  Initialiser Firebase (si pas déjà fait dans l'Application)
         FirebaseApp.initializeApp(this);
 
-        // Initialise les références des vues
-        signupName = findViewById(R.id.signup_name);
-        signupEmail = findViewById(R.id.signup_email);
-        signupUsername = findViewById(R.id.signup_username);
-        signupPassword = findViewById(R.id.signup_password);
-        signupButton = findViewById(R.id.signup_button);
-        loginRedirectText = findViewById(R.id.loginRedirectText);
-        signupBirth = findViewById(R.id.signup_birth);
-
-        // Initialise l'instance de la base de données Firebase
-        database = FirebaseDatabase.getInstance();
-        // Initialise la référence à la table "users" dans la base de données
-        reference = database.getReference("users");
-
-        // Initialise l'instance de FirebaseAuth
+        // Initialiser l'authentification Firebase
         mAuth = FirebaseAuth.getInstance();
 
-        // Configure le bouton de création de compte
+        // Initialiser Firestore
+        db = FirebaseFirestore.getInstance();
+        userRef = db.collection("users");
+
+        // Récupérer les vues
+        signupName = findViewById(R.id.signup_name);
+        signupEmail = findViewById(R.id.signup_email);
+        signupPassword = findViewById(R.id.signup_password);
+        signupPhone = findViewById(R.id.signup_phone);
+        signupButton = findViewById(R.id.signup_button);
+        signinRedirectText = findViewById(R.id.signin_redirectText);
+
         signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Récupère les valeurs des champs de saisie
-                String name = signupName.getText().toString();
-                String email = signupEmail.getText().toString();
-                String birth = signupBirth.getText().toString();
-                String username = signupUsername.getText().toString();
-                String password = signupPassword.getText().toString();
-
-                // Vérifie si tous les champs sont renseignés
-                if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email) || TextUtils.isEmpty(birth)
-                        || TextUtils.isEmpty(username) || TextUtils.isEmpty(password)) {
-                    Toast.makeText(RegisterPage.this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-
-                // Crée une instance de la classe HelperClass avec les données de l'utilisateur
-                HelperClass helperClass = new HelperClass(name, email, birth, username, password);
-
-                // Utilise Firebase Authentication pour créer un nouvel utilisateur avec l'adresse e-mail et le mot de passe
-                mAuth.createUserWithEmailAndPassword(email, password)
-                        .addOnCompleteListener(RegisterPage.this, new OnCompleteListener<AuthResult>() {
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if (task.isSuccessful()) {
-                                    // L'utilisateur a été créé avec succès, enregistre les données de l'utilisateur dans la base de données Firebase
-                                    FirebaseUser user = mAuth.getCurrentUser();
-                                    if (user != null) {
-                                        String userId = user.getUid();
-                                        reference.child(userId).setValue(helperClass);
-
-                                        // Envoie un e-mail à l'utilisateur avec ses informations de connexion
-                                        sendEmailVerification(user);
-
-                                        // Affiche un message de succès
-                                        Toast.makeText(RegisterPage.this, "Vous vous êtes inscrit avec succès!", Toast.LENGTH_SHORT).show();
-
-                                        // Redirige l'utilisateur vers l'Activity MainActivity
-                                        Intent intent = new Intent(RegisterPage.this, MainActivity.class);
-                                        startActivity(intent);
-                                    }
-                                } else {
-                                    // Une erreur s'est produite lors de la création de l'utilisateur, affiche un message d'erreur
-                                    Toast.makeText(RegisterPage.this, "Erreur lors de l'inscription. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
+                createAccount();
             }
         });
 
-        // Configure le texte de redirection vers la page de connexion
-        loginRedirectText.setOnClickListener(new View.OnClickListener() {
+
+        signinRedirectText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // Redirige l'utilisateur vers l'Activity MainActivity
                 Intent intent = new Intent(RegisterPage.this, MainActivity.class);
                 startActivity(intent);
-            }
-        });
-
-        // Configure l'EditText de la date de naissance pour afficher le sélecteur de date
-        signupBirth.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                showDatePickerDialog();
+                finish();
             }
         });
     }
 
-    public void showDatePickerDialog() {
-        final Calendar calendar = Calendar.getInstance();
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
-        int day = calendar.get(Calendar.DAY_OF_MONTH);
+    /**
+     * Vérifie les champs, vérifie si l'email est déjà utilisé,
+     * puis crée l'utilisateur dans Firebase Auth si tout va bien.
+     */
+    private void createAccount() {
+        String name = signupName.getText().toString().trim();
+        String email = signupEmail.getText().toString().trim();
+        String password = signupPassword.getText().toString().trim();
+        String phone = signupPhone.getText().toString().trim();
 
-        DatePickerDialog datePickerDialog = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
-            @Override
-            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
-                // Traitement de la date sélectionnée
-                String formattedDate = String.format("%02d/%02d/%d", dayOfMonth, month + 1, year);
-                signupBirth.setText(formattedDate);
-            }
-        }, year, month, day);
-        datePickerDialog.show();
-    }
+        // Vérifier que tous les champs sont remplis
+        if (TextUtils.isEmpty(name) || TextUtils.isEmpty(email)
+                || TextUtils.isEmpty(password) || TextUtils.isEmpty(phone)) {
+            Toast.makeText(RegisterPage.this, "Veuillez remplir tous les champs", Toast.LENGTH_SHORT).show();
+            return;
+        }
 
-    public void sendEmailVerification(FirebaseUser user) {
-        user.sendEmailVerification()
-                .addOnCompleteListener(new OnCompleteListener<Void>() {
-                    @Override
-                    public void onComplete(@NonNull Task<Void> task) {
-                        if (task.isSuccessful()) {
-                            // L'e-mail de vérification a été envoyé avec succès
-                            Toast.makeText(RegisterPage.this, "Un e-mail de vérification a été envoyé à votre adresse e-mail. Veuillez vérifier votre boîte de réception.", Toast.LENGTH_LONG).show();
+        // Vérifier la longueur du mot de passe
+        if (password.length() < 6) {
+            Toast.makeText(RegisterPage.this, "Le mot de passe doit contenir au moins 6 caractères", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Vérifier si l'e-mail est déjà utilisé
+        mAuth.fetchSignInMethodsForEmail(email)
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
+                        if (isNewUser) {
+                            registerNewUser(name, email, password, phone);
                         } else {
-                            // Une erreur s'est produite lors de l'envoi de l'e-mail de vérification
-                            Toast.makeText(RegisterPage.this, "Erreur lors de l'envoi de l'e-mail de vérification. Veuillez réessayer.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(RegisterPage.this, "Cette adresse e-mail est déjà utilisée. " +
+                                    "Veuillez utiliser une autre adresse ou vous connecter.", Toast.LENGTH_SHORT).show();
+                        }
+                    } else {
+                        Toast.makeText(RegisterPage.this, "Erreur lors de la vérification de l'adresse e-mail. " +
+                                "Veuillez réessayer.", Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /**
+     * Enregistre un nouvel utilisateur dans FirebaseAuth + Firestore.
+     */
+    private void registerNewUser(String name, String email, String password, String phone) {
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, task -> {
+                    if (task.isSuccessful()) {
+                        // Compte créé avec succès
+                        FirebaseUser user = mAuth.getCurrentUser();
+                        if (user != null) {
+                            // Construire l'objet HelperClass
+                            HelperClass helper = new HelperClass(name, email, password, phone);
+
+
+                            // Enregistrer dans Firestore
+                            String userId = user.getUid();
+                            userRef.document(userId).set(helper)
+                                    .addOnCompleteListener(dbTask -> {
+                                        if (dbTask.isSuccessful()) {
+                                            // Afficher un message de confirmation
+                                            Toast.makeText(RegisterPage.this,
+                                                    "Votre compte a été créé avec succès !",
+                                                    Toast.LENGTH_LONG).show();
+
+                                            // Envoyer un e-mail de vérification
+                                            sendVerificationEmail(user);
+
+                                            // Vider les champs
+                                            clearFields();
+
+                                            // Rediriger l'utilisateur vers MainActivity (ou rester ici)
+                                            startActivity(new Intent(RegisterPage.this, MainActivity.class));
+                                            finish();
+                                        } else {
+                                            Toast.makeText(RegisterPage.this,
+                                                    "Erreur lors de l'enregistrement en base (Firestore). " +
+                                                            "Veuillez réessayer.",
+                                                    Toast.LENGTH_SHORT).show();
+                                        }
+                                    });
+                        }
+                    } else {
+                        // Gérer les exceptions spécifiques
+                        if (task.getException() instanceof FirebaseAuthUserCollisionException) {
+                            Toast.makeText(RegisterPage.this,
+                                    "Cette adresse e-mail est déjà utilisée. " +
+                                            "Veuillez utiliser une autre adresse ou vous connecter.",
+                                    Toast.LENGTH_SHORT).show();
+                        } else {
+                            Toast.makeText(RegisterPage.this,
+                                    "Erreur lors de l'inscription. " +
+                                            "Vérifiez votre connexion ou réessayez plus tard.",
+                                    Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
+    }
+
+    /**
+     * (Optionnel) Envoie un e-mail de vérification à l'utilisateur.
+     */
+    private void sendVerificationEmail(FirebaseUser user) {
+        user.sendEmailVerification()
+                .addOnCompleteListener(task -> {
+                    if (task.isSuccessful()) {
+                        Toast.makeText(RegisterPage.this,
+                                "Un e-mail de vérification a été envoyé à " + user.getEmail(),
+                                Toast.LENGTH_LONG).show();
+                    } else {
+                        Toast.makeText(RegisterPage.this,
+                                "Impossible d'envoyer l'e-mail de vérification. Réessayez plus tard.",
+                                Toast.LENGTH_SHORT).show();
+                    }
+                });
+    }
+
+    /**
+     * Vide les champs de saisie
+     */
+    private void clearFields() {
+        signupName.setText("");
+        signupEmail.setText("");
+        signupPassword.setText("");
+        signupPhone.setText("");
     }
 }

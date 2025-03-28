@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="@drawable/rectangle_layout_dem"
+    tools:context=".ParametresBottomSheet">
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+
+        <ImageView
+            android:id="@+id/exit_con"
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/icon_exit" />
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_weight="1"
+            android:text="Paramètres"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textAlignment="center" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/optionProfi"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_persons" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Profil"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/optionContac"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_help" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Contactez-nous"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/optionFa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_faq" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="FAQ"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/optionModifierMd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_settings_backup" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Historiques"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:id="@+id/optionAnnulerTransfer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:padding="8dp"
+        android:gravity="center_vertical">
+
+        <ImageView
+            android:layout_width="18dp"
+            android:layout_height="18dp"
+            android:src="@drawable/ic_compar" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Annuler un transfert"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:layout_marginStart="16dp" />
+    </LinearLayout>
+
+
+
+    <Button
+        android:id="@+id/optionDeconnexio"
+        android:layout_width="247dp"
+        android:layout_height="45dp"
+        android:layout_marginTop="27dp"
+        android:background="@drawable/button_bgp"
+        android:text="SE DECONNECTER"
+        android:textSize="13sp"
+        android:fontFamily="@font/avenir"
+        android:layout_gravity="center"
+        android:textColor="#FFFFFF"
+        android:gravity="center"
+        app:backgroundTint="@null"
+        app:backgroundTintMode="src_over"
+        app:rippleColor="@null" />
+
+
+</LinearLayout>
